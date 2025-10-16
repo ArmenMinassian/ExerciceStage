@@ -4,31 +4,6 @@ from app_pages.spot import spot_layout
 from app_pages.prev_spot import prev_spot_layout
 import dash_bootstrap_components as dbc
 
-"""
- Cette application Dash est composée de 3 onglets, et a été conçue comme exercice de recrutement
- pour un stage à EDF.
-
- ## Lien vers la documentation officielle de plotly:
- https://dash.plotly.com/
-
- ## Comment lancer cette application ?
- 1. Assurez-vous d'avoir les dépendances (cf requirements.txt) dans votre environnement python
- 2. Depuis un terminal, exécutez la commande suivante pour lancer l'application :
-    ```
-    python main.py
-    ```
- 4. Le message ci-dessous doit s'afficher dans la console.
- Faites un Ctrl+Click sur (ou copiez-collez) le lien `http://127.[...]` pour ouvrir l'application dans votre navigateur par défaut:
- ```
- Dash is running on http://127.0.0.1:8050/
-
- * Serving Flask app 'main'
- * Debug mode: on
- ```
-
-"""
-
-
 app = Dash(
     __name__,
     external_stylesheets=[dbc.themes.BOOTSTRAP],
