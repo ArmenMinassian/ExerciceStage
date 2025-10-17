@@ -34,14 +34,16 @@ prev_spot_layout = html.Div(
         ),
         html.Div(id="output-data-upload"),
         html.P(
-            "Veuillez importer un fichier CSV contenant les données historiques (téléchargé depuis ",
-            html.A(
-                "eco2mix",
-                href="https://www.rte-france.com/eco2mix/telecharger-les-indicateurs",
-                target="_blank",
-                rel="noopener noreferrer",
-            ),
-            ").",
+            [
+                "Veuillez importer un fichier CSV contenant les données historiques (téléchargé depuis ",
+                html.A(
+                    "eco2mix",
+                    href="https://www.rte-france.com/eco2mix/telecharger-les-indicateurs",
+                    target="_blank",
+                    rel="noopener noreferrer",
+                ),
+                ").",
+            ]
         ),
         html.H3("Sélectionner un modèle:"),
         dcc.Dropdown(
@@ -100,7 +102,9 @@ def run_forecasts(n_clicks, model_filename, contents):
         with open(f"models/{model_filename}", "rb") as file:
             model = pickle.load(file)
         try:
-            model.predict(df[model.feature_names_in_])
+            previsions_prix_spot = model.predict(
+                df[model.feature_names_in_].replace("ND", float("nan")).dropna()
+            )
         except Exception as e:
             return html.Div([f"Erreur lors de l'exécution du modèle: {e}"])
 
