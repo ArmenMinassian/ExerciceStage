@@ -102,6 +102,7 @@ def run_forecasts(n_clicks, model_filename, contents):
         with open(f"models/{model_filename}", "rb") as file:
             model = pickle.load(file)
         try:
+            # TODO: exploiter `previsions_prix_spot`
             previsions_prix_spot = model.predict(
                 df[model.feature_names_in_].replace("ND", float("nan")).dropna()
             )
