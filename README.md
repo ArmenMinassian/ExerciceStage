@@ -1,5 +1,12 @@
 Cette application Dash est composée de 3 onglets, et a été conçue comme exercice de recrutement pour un stage à EDF.
 
+L'idée est d'utiliser les données de RTE (éco2mix) pour faire des prévisions de prix SPOT. A noter que d'un point de vue "physique", cette prévision est sans intérêt, car les prix SPOT sont déterminés publiquement la veille pour le lendemain. Il s'agit simplement d'un exercice simple, basé à 100% sur des données publiques et faciles d'accès, en lien avec le secteur de l'énergie. Si vous préparez d'autres modèles, il n'est donc pas nécessaire de viser à tout prix la performance de prévision.
+
+Les 3 onglets sont:
+- éco2mix 2024: onglet pour visualiser les données éco2mix sur toute l'année 2024. Les données doivent être stockées dans le dossier `data` de l'application.
+- prix SPOT: onglet pour visualiser les prix SPOT. Les données doivent être stockées dans le dossier `data` de l'application.
+- Prévision de prix SPOT: à partir d'un fichier eCO2mix_RTE_YYYY-MM-DD.xls (jour par jour) téléchargable sur éco2mix, et d'un modèle préalablement entraîné, faire une prévision et visualiser son résultat.
+
 ## Lien vers les documentations officielles utiles:
 - [dash](https://dash.plotly.com/)
 - [dash-bootstrap-components](https://www.dash-bootstrap-components.com/)
@@ -27,10 +34,11 @@ Télécharger les données "En-cours annuel consolidé" d'[éCO2mix](https://www
 Attention, le format du fichier téléchargé est un .csv (séparé par des tabulations), et pas un .xls comme l'extension le laisse penser... :)
 
 Les prix SPOT de l'électricité peuvent être téléchargés [ici](https://ember-energy.org/data/european-wholesale-electricity-price-data/).
-Choisir "hourly", puis récupérer le fichier "France.csv"
+Choisir "hourly", puis récupérer le fichier "France.csv".
 
 ## Ajout de modèle de prévision de prix SPOT
 A votre charge de créer un ou plusieurs modèles (simples, l'objectif n'est pas la performance) de prévision de prix SPOT pour les intégrer dans le dossier "models". Chacun de ces modèles doivent être des .pkl (voir [pickle](https://docs.python.org/3/library/pickle.html)) implémentant une méthode `predict()` (comme la quasi-totalité des modèles de sklearn). \
+Le modèle doit pouvoir prendre comme input une dataframe dont les colonnes sont incluses dans celles des fichiers d'éco2mix, et avoir comme sortie le prix SPOT pour le créneau horaire correspondant.
 Vous pouvez par exemple entraîner un modèle linéaire et une forêt aléatoire depuis les données "En-cours annuel consolidé" d'éco2mix et des prix SPOT depuis un notebook python, et enregistrer les modèles ainsi créés dans des `.pkl`.
 
 ## Attendu pour l'exercice de stage
