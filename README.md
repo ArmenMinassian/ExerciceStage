@@ -1,6 +1,6 @@
 Cette application Dash est composée de 3 onglets, et a été conçue comme exercice de recrutement pour un stage à EDF.
 
-L'idée est d'utiliser les données de RTE (éco2mix) pour faire des prévisions de prix SPOT. A noter que d'un point de vue "physique", cette prévision est sans intérêt, car les prix SPOT sont déterminés publiquement la veille pour le lendemain. Il s'agit simplement d'un exercice simple, basé à 100% sur des données publiques et faciles d'accès, en lien avec le secteur de l'énergie. Si vous préparez d'autres modèles, il n'est donc pas nécessaire de viser à tout prix la performance de prévision.
+L'idée est d'utiliser les données de RTE (éco2mix) pour faire des prévisions de prix SPOT: pour une heure donnée, les valeurs des colonnes d'un fichier éco2mix doivent être utilisées pour prévoir le prix SPOT associé à l'heure en question. A noter que d'un point de vue "physique", cette prévision est sans intérêt, car les prix SPOT sont déterminés publiquement la veille pour le lendemain. Il s'agit simplement d'un exercice élémentaire, basé à 100% sur des données publiques et faciles d'accès, en lien avec le secteur de l'énergie. Si vous préparez d'autres modèles, il n'est donc pas nécessaire de viser à tout prix la performance de prévision.
 
 Les 3 onglets sont:
 - éco2mix 2024: onglet pour visualiser les données éco2mix sur toute l'année 2024. Les données doivent être stockées dans le dossier `data` de l'application.

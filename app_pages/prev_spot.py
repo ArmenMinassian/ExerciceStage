@@ -109,6 +109,8 @@ def run_forecasts(n_clicks, model_filename, contents):
         except Exception as e:
             return html.Div([f"Erreur lors de l'exécution du modèle: {e}"])
 
+        # Enregistre en .csv les données de prévision
+        pd.DataFrame(previsions_prix_spot).to_csv("data/previsions.csv")
         return html.Div(
             ["Prévisions lancées avec succès! (Affichage des résultats à implémenter)"]
         )
