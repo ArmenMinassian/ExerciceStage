@@ -1,5 +1,6 @@
 import pandas as pd
 import dash
+import dash_bootstrap_components as dbc
 from dash import dcc, html, Input, Output, State, callback
 import plotly.express as px
 
@@ -11,35 +12,55 @@ df.sort_values(by="Datetime (UTC)", inplace=True)
 min_date: pd.Timestamp = df["Datetime (UTC)"].min()
 max_date: pd.Timestamp = df["Datetime (UTC)"].max()
 
-spot_layout = html.Div(
+
+
+spot_layout = dbc.Container(
+    fluid=True,
+    className="p-4 bg-light rounded-3 shadow-sm",
     style={
-        "backgroundColor": "lightblue",
+        "backgroundColor": "#e8f4fa",
         "borderRadius": "10px",
-        "padding": "20px",
-        "margin": "20px",
+        "margin": "20px auto",
+        "maxWidth": "1100px"
     },
     children=[
-        html.H2("Prix SPOT (France)"),
-        html.Div(
-            [
-                html.Button(
-                    "Dèrniere semaine", id="derniere-semaine-button", n_clicks=0
+        html.H2("Prix SPOT (France)", className="mb-4 text-start"),
+
+        dbc.Row([
+            dbc.Col(
+                dbc.ButtonGroup([
+                    dbc.Button("Dernière semaine", id="derniere-semaine-button",
+                               color="primary", className="me-2", n_clicks=0),
+                    dbc.Button("Dernier mois", id="dernier-mois-button",
+                               color="secondary", n_clicks=0),
+                ]),
+                width="auto"
+            ),
+        ], className="mb-3", justify="start"),
+
+        dbc.Row([
+            dbc.Col([
+                html.Label("Plage de dates : ", className="fw-bold mb-2 text-start"),
+                dcc.DatePickerRange(
+                    id="date-picker-range",
+                    min_date_allowed=min_date,
+                    max_date_allowed=max_date,
+                    start_date=max_date - pd.DateOffset(weeks=1),
+                    end_date=max_date,
+                    display_format="YYYY-MM-DD",
+                    clearable=False,
+                    style={"padding": "2px", "backgroundColor": "white", "borderRadius": "6px"}
                 ),
-                html.Button("Dernier mois", id="dernier-mois-button", n_clicks=0),
-            ]
-        ),
-        dcc.DatePickerRange(
-            id="date-picker-range",
-            min_date_allowed=min_date,
-            max_date_allowed=max_date,
-            start_date=max_date - pd.DateOffset(weeks=1),
-            end_date=max_date,
-            display_format="YYYY-MM-DD",
-            clearable=False,
-        ),
-        dcc.Graph(id="price-time-series"),
+            ], width="auto"),
+        ], className="mb-4", justify="start"),
+
+        # Graphique
+        dcc.Graph(id="price-time-series", style={"height": "600px"}),
     ],
 )
+
+
+
 
 
 @callback(
@@ -60,7 +81,7 @@ def update_graph(start_date, end_date):
         title="Prix SPOT",
     )
 
-    # Ajoute un background rouge semi-transparent
+    # Ajoute un background rouge quand prix négatif
     negative_prices = filtered_df[filtered_df["Price (EUR/MWhe)"] < 0]
     for i in range(len(negative_prices)):
         start_time = negative_prices["Datetime (UTC)"].iloc[i]
